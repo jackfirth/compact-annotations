@@ -5,6 +5,8 @@ A Typed Racket package for writing compact polymorphic (and non-polymorphic) fun
 
 Examples:
 
+    (require compact-annotations)
+
     (:: flip A B => A -> (B -> A) -> B)
     (define ((flip v) f)
       (f v))
