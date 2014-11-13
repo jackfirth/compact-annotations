@@ -6,10 +6,6 @@
 
 (provide ::)
 
-(define-syntax-rule (define-for-syntax any ...)
-  (begin-for-syntax
-    (define any ...)))
-
 (define-for-syntax (map-syntax f stx)
   (map f (syntax->list stx)))
 
@@ -53,27 +49,3 @@
      #`(: binding #,(All:: #'(type-var ...) (func:: #'(contract-expr ...))))]
     [(_ binding:id contract-expr ...)
      #`(: binding #,(func:: #'(contract-expr ...)))]))
-
-(:: f A B => (A -> B) (Listof A) -> (Listof B))
-(define (f mf as)
-  (map mf as))
-
-(:: $ A B => A -> (A -> B) -> B)
-(define (($ a) f)
-  (f a))
-
-(:: compare-project A B => (B B -> Boolean) -> (A -> B) -> A A -> Boolean)
-(define (((compare-project cmp) a->b) v1 v2)
-  (cmp (a->b v1)
-       (a->b v2)))
-
-(:: compare-as-real A => (A -> Real) -> A A -> Boolean)
-(define compare-as-real ((inst compare-project Real) <))
-
-(:: string-shorter? String String -> Boolean)
-(define string-shorter?
-  (compare-as-real string-length))
-
-(:: zipWith A B C => (A B -> C) -> (Listof A) (Listof B) -> (Listof C))
-(define ((zipWith zipper) as bs)
-  (map zipper as bs))
