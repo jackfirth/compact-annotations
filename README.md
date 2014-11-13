@@ -7,7 +7,7 @@ Examples:
 
     (require compact-annotations)
 
-    (:: flip A B => A -> (B -> A) -> B)
+    (:: flip A B => A -> (A -> B) -> B)
     (define ((flip v) f)
       (f v))
     
