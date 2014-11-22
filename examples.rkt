@@ -29,3 +29,12 @@
 (:: map-list-to-vector A B => (Listof A) -> (A -> B) -> (Vectorof B))
 (define ((map-list-to-vector lst) f)
   (list->vector (map f lst)))
+
+(:: add-ints * Integer -> Integer)
+(define add-ints +)
+
+(:: in-range? Real Real + Boolean -> Real -> Boolean)
+(define ((in-range? low high [exclusive? #f]) x)
+  (if exclusive?
+      (and (< x low) (> x high))
+      (and (<= x low) (>= x high))))
