@@ -22,8 +22,8 @@
 (define string-shorter?
   (((inst compare-project Real) <) string-length))
 
-(:: zipWith A B C => (A B -> C) -> (Listof A) (Listof B) -> (Listof C))
-(define ((zipWith zipper) as bs)
+(:: zip-with A B C => (A B -> C) -> (Listof A) (Listof B) -> (Listof C))
+(define ((zip-with zipper) as bs)
   (map zipper as bs))
 
 (:: map-list-to-vector A B => (Listof A) -> (A -> B) -> (Vectorof B))
@@ -34,10 +34,8 @@
 (define add-ints +)
 
 (:: in-range? Real Real + Boolean -> Real -> Boolean)
-(define ((in-range? low high [exclusive? #f]) x)
-  (if exclusive?
-      (and (< x low) (> x high))
-      (and (<= x low) (>= x high))))
+(define ((in-range? low high [include-endpoints? #t]) x)
+  ((if include-endpoints? <= <) low x high))
 
 (:: and? A => * (A -> Boolean) -> A -> Boolean)
 (define ((and? . ps) a)
