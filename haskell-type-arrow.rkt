@@ -36,16 +36,30 @@
                 #'(All (bound-type-var ...) (-> arg-type ... result-type)))))])]))
 
 (define-for-syntax func::
-  (syntax-parser
-    [((~and (~not (~literal ->)) expr-arg) ... (~literal ->) expr-result ...)
-     #`(-> #,@(map-syntax func:: #'(expr-arg ...))
-           #,(func:: #'(expr-result ...)))]
+  (syntax-parser #:literals (->)
+    [((~and (~not ->) expr-arg) ... (~literal ->) expr-result ...)
+     (func-contract:: #'(expr-arg ...) (func:: #'(expr-result ...)))]
     [(other) #'other]
     [other #'other]))
 
+(define-for-syntax (func-contract:: arg-stx result-stx)
+  (syntax-parse arg-stx #:literals (+ *)
+    [((~and (~not +) (~not *) expr-arg) ... * (~and (~not *) (~not +) rest-arg))
+     #`(->* (#,@(map-syntax func:: #'(expr-arg ...)))
+            ()
+            #:rest #,(func:: #'rest-arg)
+            #,result-stx)]
+    [((~and (~not +) (~not *) expr-arg) ... + (~and (~not *) (~not +) opt-arg) ...+)
+     #`(->* (#,@(map-syntax func:: #'(expr-arg ...)))
+            (#,@(map-syntax func:: #'(opt-arg ...)))
+            #,result-stx)]
+    [((~and (~not +) (~not *) expr-arg) ...)
+     #`(-> #,@(map-syntax func:: #'(expr-arg ...))
+           #,result-stx)]))
+
 (define-syntax (:: stx)
-  (syntax-parse stx
-    [(_ binding:id type-var:id ...+ (~literal =>) ~! contract-expr ...+)
+  (syntax-parse stx #:literals (=>)
+    [(_ binding:id type-var:id ...+ => ~! contract-expr ...+)
      #`(: binding #,(All:: #'(type-var ...) (func:: #'(contract-expr ...))))]
     [(_ binding:id contract-expr ...)
      #`(: binding #,(func:: #'(contract-expr ...)))]))
