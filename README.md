@@ -22,3 +22,11 @@ Examples:
     (:: string-shorter? String String -> Boolean)
     (define string-shorter?
       (((inst compare-as Real) <) string-length))
+
+    (:: in-range? Real Real + Boolean -> Real -> Boolean)
+    (define ((in-range? low high [include-endpoints? #t]) x)
+      ((if include-endpoints? <= <) low x high))
+    
+    (:: and? A => * (A -> Boolean) -> A -> Boolean)
+    (define ((and? . ps) a)
+      (andmap (λ ([p : (A -> Boolean)]) (p a)) ps))
