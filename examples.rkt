@@ -38,3 +38,7 @@
   (if exclusive?
       (and (< x low) (> x high))
       (and (<= x low) (>= x high))))
+
+(:: and? A => * (A -> Boolean) -> A -> Boolean)
+(define ((and? . ps) a)
+  (andmap (λ ([p : (A -> Boolean)]) (p a)) ps))
