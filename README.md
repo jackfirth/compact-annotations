@@ -30,3 +30,5 @@ Examples:
     (:: and? A => * (A -> Boolean) -> A -> Boolean)
     (define ((and? . ps) a)
       (andmap (λ ([p : (A -> Boolean)]) (p a)) ps))
+
+To install, run `raco pkg install compact-annotations`.
