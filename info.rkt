@@ -1,5 +1,8 @@
 #lang info
 
-(define version "0.1")
-(define collection "compact-annotations")
-(define deps '("base" "typed-racket-lib"))
+(define collection 'multi)
+(define deps '("base" "rackunit-lib"))
+(define build-deps '("cover"
+                     "scribble-lib"
+                     "rackunit-lib"
+                     "racket-doc"))
