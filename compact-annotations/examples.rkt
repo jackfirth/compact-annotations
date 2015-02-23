@@ -1,6 +1,6 @@
 #lang typed/racket
 
-(require "haskell-type-arrow.rkt")
+(require "main.rkt")
 
 (:: f A B => (A -> B) (Listof A) -> (Listof B))
 (define (f mf as)
