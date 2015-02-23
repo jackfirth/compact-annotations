@@ -1,4 +1,4 @@
-compact-annotations
+compact-annotations [![Build Status](https://travis-ci.org/jackfirth/compact-annotations.svg)](https://travis-ci.org/jackfirth/compact-annotations) [![Coverage Status](https://coveralls.io/repos/jackfirth/compact-annotations/badge.svg)](https://coveralls.io/r/jackfirth/compact-annotations)
 ===================
 
 A Typed Racket package for writing compact polymorphic (and non-polymorphic) function annotations with a syntax similar to that of Haskell's type annotations.
