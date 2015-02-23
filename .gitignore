@@ -1,2 +1,5 @@
-compiled/*
-*.bak
+**/compiled/*
+**/*.bak
+**/*.html
+**/*.css
+**/*.js
